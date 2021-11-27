@@ -99,6 +99,10 @@ class GameScene: SKScene {
         bottomWall.physicsBody?.isDynamic = false
         bottomWall.physicsBody?.affectedByGravity = false
         
+        topWall.position = CGPoint(x: self.frame.maxX / 2, y: self.frame.maxY)
+        
+        bottomWall.position = CGPoint(x: self.frame.maxX / 2, y: self.frame.minY)
+        
         wallPair.addChild(topWall)
         wallPair.addChild(bottomWall)
         wallPair.zPosition = 3
