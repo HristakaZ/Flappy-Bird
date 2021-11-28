@@ -24,9 +24,9 @@ class GameScene: SKScene {
     var background = SKSpriteNode(imageNamed: "Flappy-Bird-Background")
     var ground = SKSpriteNode(imageNamed: "Flappy-Bird-Ground")
     var bird = SKSpriteNode(imageNamed: "Flappy-Bird-Skin")
-    var topWall = SKSpriteNode(imageNamed: "Flappy-Bird-Wall")
-    var bottomWall = SKSpriteNode(imageNamed: "Flappy-Bird-Wall")
     var wallPair = SKNode()
+    var moveAndRemoveAction = SKAction()
+    var gameStarted = Bool()
     
     override func didMove(to view: SKView) {
         /*removing the helloLabel from the gamescene as we cannot remove it manually from the file using a VM because xcode shuts down unexpectedly(lol)
@@ -37,14 +37,48 @@ class GameScene: SKScene {
         createBackground()
         createGround()
         createBird()
-        createWallPair()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //begin falling only when we start touching the screen
         bird.physicsBody?.affectedByGravity = true
-        bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 190))
+        bird.run(SKAction.moveTo(x: self.frame.midX, duration: 1.0))
+        if gameStarted == false {
+            gameStarted = true
+            
+            var moveWalls = SKAction()
+            var removeWalls = SKAction()
+            let distance = CGFloat(self.frame.width + wallPair.frame.width)
+            let spawnWalls = SKAction.run({
+                () in
+                
+                moveWalls = SKAction.moveBy(x: -distance, y: 0, duration: 2 * distance)
+                removeWalls = SKAction.removeFromParent()
+                self.createWallPair()
+            })
+            
+            let spawnWallsDelay = SKAction.wait(forDuration: 3.0)
+            let spawnWallsSequence = SKAction.sequence([spawnWalls, spawnWallsDelay])
+            let spawnWallsDelayForever = SKAction.repeatForever(spawnWallsSequence)
+            self.run(spawnWallsDelayForever)
+            
+            moveAndRemoveAction = SKAction.sequence([moveWalls, removeWalls])
+            
+            bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            bird.physicsBody?.applyImpulse(CGVector(dx:0, dy:90))
+            self.wallPair.run(moveAndRemoveAction)
+        }
+        else {
+            let distance = CGFloat(self.frame.width + wallPair.frame.width)
+            let moveWalls = SKAction.moveBy(x: -distance, y: 0, duration: 0.008 * distance)
+            let removeWalls = SKAction.removeFromParent()
+            moveAndRemoveAction = SKAction.sequence([moveWalls, removeWalls])
+            
+            bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 190))
+            self.wallPair.run(moveAndRemoveAction)
+        }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -52,6 +86,7 @@ class GameScene: SKScene {
     }
     
     func createBackground() {
+        background = SKSpriteNode(imageNamed: "Flappy-Bird-Background")
         background.setScale(2)
         background.zPosition = 1
         self.addChild(background)
@@ -71,6 +106,7 @@ class GameScene: SKScene {
     }
     
     func createBird() {
+        bird.position.x = self.frame.minX
         bird.zPosition = 2
         bird.setScale(0.3)
         bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.frame.height / 2)
@@ -83,6 +119,9 @@ class GameScene: SKScene {
     }
     
     func createWallPair() {
+        wallPair = SKNode()
+        let topWall = SKSpriteNode(imageNamed: "Flappy-Bird-Wall")
+        let bottomWall = SKSpriteNode(imageNamed: "Flappy-Bird-Wall")
         topWall.position = CGPoint(x: self.frame.maxX / 2, y: self.frame.maxY)
         topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
         topWall.physicsBody?.categoryBitMask = CollisionBitMask.Wall
@@ -106,6 +145,7 @@ class GameScene: SKScene {
         wallPair.addChild(topWall)
         wallPair.addChild(bottomWall)
         wallPair.zPosition = 3
+        wallPair.position.y = CGFloat.random(in: -200...200)
         self.addChild(wallPair)
     }
 }
