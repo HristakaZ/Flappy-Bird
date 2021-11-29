@@ -57,7 +57,7 @@ class GameScene: SKScene {
                 self.createWallPair()
             })
             
-            let spawnWallsDelay = SKAction.wait(forDuration: 3.0)
+            let spawnWallsDelay = SKAction.wait(forDuration: 1.5)
             let spawnWallsSequence = SKAction.sequence([spawnWalls, spawnWallsDelay])
             let spawnWallsDelayForever = SKAction.repeatForever(spawnWallsSequence)
             self.run(spawnWallsDelayForever)
@@ -83,6 +83,14 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        let endlesslyMoveWallsAction = SKAction.run({
+            () in
+            self.endlesslyMoveWalls()
+        })
+        let delay = SKAction.wait(forDuration: 3.0)
+        let removeWalls = SKAction.removeFromParent()
+        let sequence = SKAction.sequence([endlesslyMoveWallsAction, delay, removeWalls])
+        self.wallPair.run(sequence)
     }
     
     func createBackground() {
@@ -146,6 +154,19 @@ class GameScene: SKScene {
         wallPair.addChild(bottomWall)
         wallPair.zPosition = 3
         wallPair.position.y = CGFloat.random(in: -200...200)
+        wallPair.name = "wallPair"
         self.addChild(wallPair)
+    }
+    
+    func endlesslyMoveWalls(){
+        self.enumerateChildNodes(withName: "wallPair", using: ({
+            (node, error) in
+            // 1
+            node.position.x -= 9
+            // 2
+            if node.position.x < -(self.scene?.size.width)! {
+                node.position.x += (self.scene?.size.width)! * 3
+            }
+         }))
     }
 }
