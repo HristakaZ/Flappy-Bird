@@ -277,6 +277,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
                                                             mode: AVAudioSession.Mode.default,
                                                             options: [AVAudioSession.CategoryOptions.mixWithOthers])
+            audioPlayer.volume = 100
+            audioPlayer.numberOfLoops = -1
             audioPlayer.play()
         }
         catch {
