@@ -15,6 +15,7 @@
 		8456AC48274B10D1002CF18C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8456AC46274B10D1002CF18C /* Main.storyboard */; };
 		8456AC4A274B10D2002CF18C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8456AC49274B10D2002CF18C /* Assets.xcassets */; };
 		8456AC4D274B10D2002CF18C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8456AC4B274B10D2002CF18C /* LaunchScreen.storyboard */; };
+		847415A3275C861200643A2A /* Isyan Tetick - Patlamaya Devam.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 847415A2275C861200643A2A /* Isyan Tetick - Patlamaya Devam.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		8456AC47274B10D1002CF18C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8456AC49274B10D2002CF18C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8456AC4C274B10D2002CF18C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		847415A2275C861200643A2A /* Isyan Tetick - Patlamaya Devam.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Isyan Tetick - Patlamaya Devam.mp3"; path = "../../Isyan Tetick - Patlamaya Devam.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				8456AC49274B10D2002CF18C /* Assets.xcassets */,
 				8456AC4B274B10D2002CF18C /* LaunchScreen.storyboard */,
 				843A0754274B168A00F8CC5B /* GameScene.sks */,
+				847415A2275C861200643A2A /* Isyan Tetick - Patlamaya Devam.mp3 */,
 			);
 			path = FlappyBird;
 			sourceTree = "<group>";
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847415A3275C861200643A2A /* Isyan Tetick - Patlamaya Devam.mp3 in Resources */,
 				8456AC48274B10D1002CF18C /* Main.storyboard in Resources */,
 				843A0755274B168A00F8CC5B /* GameScene.sks in Resources */,
 				8456AC4A274B10D2002CF18C /* Assets.xcassets in Resources */,
